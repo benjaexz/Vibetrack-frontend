@@ -1,0 +1,16 @@
+<h1>Vibetrack</h1>
+
+<div>
+  <input [(ngModel)]="newDescription" placeholder="Descrição" />
+  <input [(ngModel)]="newIntensity" type="number" placeholder="Intensidade" />
+  <button (click)="addVibe()">Adicionar</button>
+</div>
+
+<ul>
+  <li *ngFor="let vibe of vibes"
+      [ngStyle]="{'background-color': getColor(vibe.intensity), 'padding': '5px', 'margin-bottom': '5px'}">
+    {{vibe.description}} - {{vibe.intensity}}
+  </li>
+</ul>
+
+<p *ngIf="vibes.length === 0">Nenhuma vibe encontrada.</p>
