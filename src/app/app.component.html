@@ -1,16 +1,24 @@
-<h1>Vibetrack</h1>
+<div style="padding: 20px; max-width: 500px; margin: auto;">
+  <h2>Vibetrack</h2>
 
-<div>
-  <input [(ngModel)]="newDescription" placeholder="Descrição" />
-  <input [(ngModel)]="newIntensity" type="number" placeholder="Intensidade" />
-  <button (click)="addVibe()">Adicionar</button>
+  <!-- FORM -->
+  <div style="margin-bottom: 20px;">
+    <input [(ngModel)]="newMusica" placeholder="Música" />
+    <input [(ngModel)]="newArtista" placeholder="Artista" />
+    <input [(ngModel)]="newGenero" placeholder="Gênero" />
+    <input [(ngModel)]="newEmocao" placeholder="Emoção" />
+    <button (click)="createVibe()">Salvar vibe</button>
+  </div>
+
+  <!-- LISTA -->
+  <div *ngFor="let vibe of vibes"
+       style="background:#e0e0e0; padding:10px; margin-bottom:10px; border-radius:6px;">
+    <b>{{vibe.musica}}</b> – {{vibe.artista}}
+    <br>
+    Gênero: {{vibe.genero}}
+    <br>
+    Emoção: {{vibe.emocao}}
+    <br>
+    <small>{{vibe.timestamp}}</small>
+  </div>
 </div>
-
-<ul>
-  <li *ngFor="let vibe of vibes"
-      [ngStyle]="{'background-color': getColor(vibe.intensity), 'padding': '5px', 'margin-bottom': '5px'}">
-    {{vibe.description}} - {{vibe.intensity}}
-  </li>
-</ul>
-
-<p *ngIf="vibes.length === 0">Nenhuma vibe encontrada.</p>

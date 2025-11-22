@@ -4,13 +4,18 @@ import { Observable } from 'rxjs';
 
 export interface VibeEntry {
 id: number;
-description: string;
-intensity: number;
+musica: string;
+artista: string;
+genero: string;
+emocao: string;
+timestamp: string;
+userId: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-private apiUrl = 'http://localhost:8080/api/vibes';
+
+private apiUrl = 'http://localhost:8080/vibes';
 
 constructor(private http: HttpClient) {}
 

@@ -11,40 +11,42 @@ standalone: true,
 imports: [CommonModule, FormsModule]
 })
 export class AppComponent {
-vibes: VibeEntry[] = [];
-newDescription = '';
-newIntensity: number | null = null;
 
-constructor(private userService: UserService) {
+vibes: VibeEntry[] = [];
+
+newMusica = '';
+newArtista = '';
+newGenero = '';
+newEmocao = '';
+
+constructor(private service: UserService) {}
+
+  ngOnInit() {
     this.loadVibes();
   }
 
-  loadVibes(): void {
-    this.userService.getVibes().subscribe({
-      next: data => this.vibes = data,
-      error: err => console.error('Erro ao carregar vibes', err)
+  loadVibes() {
+    this.service.getVibes().subscribe(v => {
+      this.vibes = v;
     });
   }
 
-  addVibe(): void {
-    if (!this.newDescription || this.newIntensity === null) return;
-    const vibe: Partial<VibeEntry> = {
-      description: this.newDescription,
-      intensity: this.newIntensity
+  createVibe() {
+    const vibe = {
+      userId: 1,
+      musica: this.newMusica,
+      artista: this.newArtista,
+      genero: this.newGenero,
+      emocao: this.newEmocao
     };
-    this.userService.createVibe(vibe).subscribe({
-      next: created => {
-        this.vibes.push(created);
-        this.newDescription = '';
-        this.newIntensity = null;
-      },
-      error: err => console.error('Erro ao criar vibe', err)
-    });
-  }
 
-  getColor(intensity: number): string {
-    if (intensity >= 7) return 'red';
-    if (intensity >= 4) return 'yellow';
-    return 'green';
+    this.service.createVibe(vibe).subscribe(created => {
+      this.vibes.push(created);
+
+      this.newMusica = '';
+      this.newArtista = '';
+      this.newGenero = '';
+      this.newEmocao = '';
+    });
   }
 }
